@@ -1,8 +1,15 @@
-FROM nginx:alpine
+FROM node:20-alpine
 
-COPY nginx.conf /etc/nginx/conf.d/default.conf
-COPY proposta.html /usr/share/nginx/html/index.html
+WORKDIR /app
 
-EXPOSE 80
+COPY package.json ./
+COPY server.js ./
+COPY proposta.html ./
 
-CMD ["nginx", "-g", "daemon off;"]
+ENV NODE_ENV=production
+ENV PORT=3000
+ENV HOSTNAME="0.0.0.0"
+
+EXPOSE 3000
+
+CMD ["node", "server.js"]
